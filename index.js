@@ -38,8 +38,19 @@ server.post('/api/zoos',  (req, res) => {
 // GET all endpoint
 server.get('/api/zoos', async (req, res) => {
   try {
-   const zoos = await db(zoos);
+   const zoos = await db('zoos');
    res.status(200).json(zoos);
+  } catch (error) {
+   res.status(500).json(error);
+  }
+})
+
+server.get('/api/zoos/:id', async (req, res) => {
+  try {
+   const zoo = await db('zoos')
+    .where({id: req.params.id})
+    .first();
+   res.status(200).json(zoo);
   } catch (error) {
    res.status(500).json(error);
   }
