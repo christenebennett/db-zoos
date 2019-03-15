@@ -45,6 +45,7 @@ server.get('/api/zoos', async (req, res) => {
   }
 })
 
+// GET by id
 server.get('/api/zoos/:id', async (req, res) => {
   try {
    const zoo = await db('zoos')
@@ -56,7 +57,47 @@ server.get('/api/zoos/:id', async (req, res) => {
   }
 })
 
+// UPDATE roles
+server.put('/api/zoos/:id', async (req, res) => {
+  try {
+    //updated will get pulled from db by id, then updated
+    const updated = await db('zoos')
+      .where({id: req.params.id})
+      .update(req.body);
+      res.status(200).json(updated);
+      // if updated is valid, it will have an id number greater than 0
+      // the conditional below will check that the data associated with
+      // the id exists
 
+      // conditional below still in progress
+      // if(updated > 0) {
+      //   // if a record exists and is successfully updated, 
+      //   // it will return the record with the 200 status
+      //   const zoo = await db('zoos')
+      //     .where({id: req.params.id})
+      //     .first();
+      //   res.status(200).json(zoo);
+      // } else {
+      //   res.status(404).json({message: "Zoo not found"});
+      // }
+
+
+  } catch (error) {
+    res.status(500).json({err: "Error updating zoo"});
+  }
+})
+
+// DELETE zoo
+// server.delete('/api/zoos/:id', async (req, res) => {
+//   try {
+//    const zooDelete = await db('zoos')
+//     .where({id: req.params.id})
+//     .first();
+//    res.status(200).json(zoo);
+//   } catch (error) {
+//    res.status(500).json(error);
+//   }
+// })
 
 const port = 5000;
 server.listen(port, function() {
