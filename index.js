@@ -88,16 +88,25 @@ server.put('/api/zoos/:id', async (req, res) => {
 })
 
 // DELETE zoo
-// server.delete('/api/zoos/:id', async (req, res) => {
-//   try {
-//    const zooDelete = await db('zoos')
-//     .where({id: req.params.id})
-//     .first();
-//    res.status(200).json(zoo);
-//   } catch (error) {
-//    res.status(500).json(error);
-//   }
-// })
+server.delete('/api/zoos/:id', async (req, res) => {
+  try {
+    const count = await db('zoos')
+      .where({id: req.params.id})
+      .del(req.body);
+      res.status(200).json(count);
+     
+
+      if(count > 0) {
+        res.status(204);
+      } else {
+        res.status(404).json({message: "Zoo not found"});
+      }
+
+
+  } catch (error) {
+    res.status(500).json({err: "Error updating zoo"});
+  }
+})
 
 const port = 5000;
 server.listen(port, function() {
