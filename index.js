@@ -35,6 +35,15 @@ server.post('/api/zoos',  (req, res) => {
   
 })
 
+// GET all endpoint
+server.get('/api/zoos', async (req, res) => {
+  try {
+   const zoos = await db(zoos);
+   res.status(200).json(zoos);
+  } catch (error) {
+   res.status(500).json(error);
+  }
+})
 
 
 
