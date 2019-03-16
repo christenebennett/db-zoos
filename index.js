@@ -16,7 +16,7 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 
-// endpoints here
+// ********* ZOO endpoints ********* 
 
 // POST endpoint
 server.post('/api/zoos', (req, res) => {
@@ -122,8 +122,7 @@ server.delete('/api/zoos/:id', async (req, res) => {
   }
 })
 
-
-// STRETCH - Bears endpoints
+// ********* STRETCH - Bears endpoints ********* 
 
 // POST endpoint
 server.post('/api/bears', (req, res) => {
@@ -215,7 +214,6 @@ server.delete('/api/bears/:id', async (req, res) => {
     const count = await db('bears')
       .where({id: req.params.id})
       .del(req.body);
-    // res.status(200).json(count);
     if (count > 0) {
       res.status(204);
     } else {
